@@ -1,0 +1,31 @@
+services:
+  vectordb:
+    image: chromadb/chroma
+    volumes:
+      - ./chroma:/data
+    expose:
+      - "8000"
+    networks: 
+      - internal
+    
+  restapi:
+    build: .
+    ports: 
+      - "4000:4000"
+    networks: 
+      - internal
+      - public
+    environment:
+      - FLASK_APP=servidor.py
+      - FLASK_ENV=development
+      # - MISTRAL_API_KEY = Include here the personal mistral api key used
+    depends_on:
+      - vectordb
+
+networks:
+  internal:
+    driver: bridge
+  public:
+    driver: bridge
+
+
