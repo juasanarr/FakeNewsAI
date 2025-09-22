@@ -1,4 +1,0 @@
-mistralai
-chromadb
-flask
-
